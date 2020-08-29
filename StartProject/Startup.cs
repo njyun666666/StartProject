@@ -10,11 +10,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StartProject.Services;
+using StartProject.Services.IServices;
 
 namespace StartProject
 {
     public class Startup
     {
+        readonly string CORSPolicy = "_CORSPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +29,23 @@ namespace StartProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CORSPolicy,
+                builder =>
+                {
+                    builder.WithOrigins(Configuration.GetValue<string>("App:CorsOrigins").Replace(" ", "").Split(",", StringSplitOptions.RemoveEmptyEntries))
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
+
+            services.AddSingleton<IAccountService, AccountService>();
+
+
+            services.AddMemoryCache();
+
             services.AddControllers();
         }
 
@@ -35,6 +56,9 @@ namespace StartProject
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(CORSPolicy);
+
 
             app.UseHttpsRedirection();
 
