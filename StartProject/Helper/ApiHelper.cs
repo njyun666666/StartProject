@@ -68,7 +68,6 @@ namespace StartProject.Helper
             try
             {
                 HttpClient ClientF = new HttpClient();
-
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 using (HttpResponseMessage responseMessage = ClientF.GetAsync(ApiUrl).GetAwaiter().GetResult())
@@ -99,7 +98,6 @@ namespace StartProject.Helper
             try
             {
                 string param = string.Empty;
-
                 var properties = obj.GetType().GetProperties();
 
                 foreach (var p in properties)
@@ -107,7 +105,7 @@ namespace StartProject.Helper
                     string name = p.Name;
                     var value = p.GetValue(obj, null);
 
-                    if (value.GetType().Name == "DateTime")
+                    if (value != null && value.GetType().Name == "DateTime")
                     {
                         value = Convert.ToDateTime(value).ToString("s");
                     }
@@ -122,7 +120,6 @@ namespace StartProject.Helper
 
 
                 HttpClient ClientF = new HttpClient();
-
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 using (HttpResponseMessage responseMessage = ClientF.GetAsync(ApiUrl).GetAwaiter().GetResult())

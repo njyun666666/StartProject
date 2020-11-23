@@ -29,13 +29,12 @@ namespace StartProject.Controllers
         /// </summary>
         protected void CheckLogin()
         {
-            string encodedAuth = string.Empty;
             string authHeader = HttpContext.Request.Headers["Authorization"];
 
             if (authHeader != null && authHeader.StartsWith("Bearer"))
             {
                 // Extract credentials
-                encodedAuth = authHeader.Substring("Bearer ".Length).Trim();
+                string encodedAuth = authHeader.Substring("Bearer ".Length).Trim();
 
                 //decode
                 string decodeAuth = AuthService.TokenKeyAES_decrypt(encodedAuth);
@@ -58,7 +57,31 @@ namespace StartProject.Controllers
 
         }
 
-
+        #region ClientIP Get
+        public string ClientIP_Get()
+        {
+            string IP = string.Empty;
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(HttpContext.Request.Headers["X-Forwarded-For"]))
+                {
+                    IP = HttpContext.Request.Headers["X-Forwarded-For"].ToString().Split(new char[] { ',' }).FirstOrDefault();
+                }
+                else if (!string.IsNullOrWhiteSpace(HttpContext.Request.Headers["MS_HttpContext"]))
+                {
+                    IP = HttpContext.Request.Headers["MS_HttpContext"];
+                }
+                else
+                {
+                    IP = HttpContext.Connection.RemoteIpAddress.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return IP;
+        }
+        #endregion
 
 
 

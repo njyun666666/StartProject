@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,6 @@ using Microsoft.Extensions.Caching.Memory;
 using StartProject.Helper;
 using StartProject.Models;
 using StartProject.Services.IServices;
-using System.Text.Json;
 
 namespace StartProject.Controllers
 {
@@ -28,20 +28,33 @@ namespace StartProject.Controllers
 
         public ActionResult<List<WeatherForecast>> Index()
         {
-            AccountModel account = new AccountModel() 
+            ClientIP_Get();
+
+            AccountModel account = new AccountModel()
             {
-                UID="123456789",
-                Account="administrator",
-                UserName="admin"
+                UID = "123456789",
+                Account = "administrator",
+                UserName = "admin",
+                ExpiresDate = DateTime.Now
             };
 
 
             List<WeatherForecast> result = ApiHelper.Get<List<WeatherForecast>, AccountModel>("https://localhost:44330/WeatherForecast", account);
 
-            
+
+
             return result;
         }
 
+        public string ip()
+        {
+
+            string a = "";
+            a+= "X-Forwarded-For:" + HttpContext.Request.Headers["X-Forwarded-For"].ToString().Split(new char[] { ',' }).FirstOrDefault();
+            a += "\nMS_HttpContext:" + HttpContext.Request.Headers["MS_HttpContext"];
+            a += "\nRemoteIpAddress:" + HttpContext.Connection.RemoteIpAddress.ToString();
+            return a;
+        }
 
 
     }

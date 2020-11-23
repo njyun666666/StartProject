@@ -14,7 +14,6 @@ namespace StartProject.Models
         /// <summary>
         /// cookie Expires Date
         /// </summary>
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:ss:dd}")]
         public DateTime ExpiresDate { get; set; }
     }
 }
