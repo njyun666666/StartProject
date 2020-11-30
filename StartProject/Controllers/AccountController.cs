@@ -53,6 +53,16 @@ namespace StartProject.Controllers
             a+= "X-Forwarded-For:" + HttpContext.Request.Headers["X-Forwarded-For"].ToString().Split(new char[] { ',' }).FirstOrDefault();
             a += "\nMS_HttpContext:" + HttpContext.Request.Headers["MS_HttpContext"];
             a += "\nRemoteIpAddress:" + HttpContext.Connection.RemoteIpAddress.ToString();
+            a += "\n" + ClientIP_Get();
+            return a;
+        }
+
+
+        public string aesen(string id)
+        {
+            string a = EncryptHelper.TokenAES_encrypt(id);
+            a += "\n" + EncryptHelper.TokenAES_decrypt(a);
+
             return a;
         }
 

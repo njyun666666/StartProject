@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using StartProject.Helper;
 using StartProject.Models;
 using StartProject.Services;
 
@@ -37,7 +38,7 @@ namespace StartProject.Controllers
                 string encodedAuth = authHeader.Substring("Bearer ".Length).Trim();
 
                 //decode
-                string decodeAuth = AuthService.TokenKeyAES_decrypt(encodedAuth);
+                string decodeAuth = EncryptHelper.TokenAES_decrypt(encodedAuth);
 
                 if(!string.IsNullOrWhiteSpace(decodeAuth))
                 {
