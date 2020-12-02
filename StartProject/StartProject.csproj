@@ -16,5 +16,9 @@
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TestProject\TestProject.csproj" />
+  </ItemGroup>
+
 
 </Project>
