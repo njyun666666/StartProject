@@ -11,6 +11,6 @@ namespace StartProject.Services.IServices
     {
         public List<Table_1Model> Table_1_Get(int? id);
         public BaseViewModel Table_1_Para_Output();
-        public BaseViewModel Table_1_ref();
+        public BaseViewModel<Table_1Model> Table_1_ref();
     }
 }

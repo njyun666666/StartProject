@@ -19,7 +19,7 @@ namespace StartProject.Services
             return testDB.Table_1_Get(id);
         }
 
-        public BaseViewModel Table_1_ref()
+        public BaseViewModel<Table_1Model> Table_1_ref()
         {
             BaseViewModel<Table_1Model> baseViewModel = new BaseViewModel<Table_1Model>();
             DynamicParameters parameters = null;

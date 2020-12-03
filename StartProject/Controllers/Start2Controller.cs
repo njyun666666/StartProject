@@ -29,7 +29,7 @@ namespace StartProject.Controllers
         {
             return _start2Service.Table_1_Get(id);
         }
-        public BaseViewModel Select_Output()
+        public BaseViewModel<Table_1Model> Select_Output()
         {
             return _start2Service.Table_1_ref();
         }
