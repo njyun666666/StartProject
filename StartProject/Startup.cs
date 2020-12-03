@@ -41,12 +41,13 @@ namespace StartProject
                 });
             });
 
-            services.AddSingleton<IAccountService, AccountService>();
-
 
             services.AddMemoryCache();
 
             services.AddControllers();
+
+            services.AddSingleton<IAccountService, AccountService>();
+            services.AddSingleton<IStart2Service, Start2Service>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,12 +1,17 @@
 {
   "WebDB": {
-    "ip": "127.0.0.1",
+    "ip": ".",
     "user": "webuser",
     "pwd": "RMyawsNV@1C72mzJU.X)"
   },
   "LogDB": {
-    "ip": "127.0.0.1",
+    "ip": ".",
     "user": "loguser",
     "pwd": "RMyawsNV@1C72mzJU.X)"
+  },
+  "Test": {
+    "ip": ".",
+    "user": "testuser",
+    "pwd": "testuser"
   }
 }

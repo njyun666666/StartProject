@@ -13,47 +13,92 @@ namespace StartProject.DB.DBClass
 
         #region DB_Query 資料庫連線
         /// <summary>
-        /// 資料庫連線
+        /// Select
         /// </summary>
         /// <param name="str_conn">連線字串</param>
         /// <param name="sp_name">SP 名稱</param>
-        /// <param name="sql_value">輸入的值與類型</param>
-        static public List<T> DB_Query<T>(string str_conn, string sp_name, DynamicParameters sql_value)
+        /// <param name="parameters">輸入的值與類型</param>
+        static public List<T> DB_Query<T>(string str_conn, string sp_name, DynamicParameters parameters)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(str_conn))
                 {
-                    return conn.Query<T>(sp_name, sql_value, commandType: CommandType.StoredProcedure).ToList();
+                    return conn.Query<T>(sp_name, parameters, commandType: CommandType.StoredProcedure).ToList();
                 }
             }
             catch (Exception ex)
             {
-                // logger.Warn(ex.ToString());
+                return null;
+            }
+        }
+        
+        /// <summary>
+        /// Select and output parameters
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="str_conn"></param>
+        /// <param name="sp_name"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        static public List<T> DB_Query<T>(string str_conn, string sp_name, ref DynamicParameters parameters)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(str_conn))
+                {
+                    return conn.Query<T>(sp_name, parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
                 return null;
             }
         }
         #endregion
 
+
         #region DB_Query_Single 資料庫連線
         /// <summary>
-        /// 資料庫連線
+        /// select 1 rows
         /// </summary>
         /// <param name="str_conn">連線字串</param>
         /// <param name="sp_name">SP 名稱</param>
-        /// <param name="sql_value">輸入的值與類型</param>
-        static public T DB_Query_Single<T>(string str_conn, string sp_name, DynamicParameters sql_value)
+        /// <param name="parameters">輸入的值與類型</param>
+        static public T DB_Query_Single<T>(string str_conn, string sp_name, DynamicParameters parameters)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(str_conn))
                 {
-                    return conn.QueryFirstOrDefault<T>(sp_name, sql_value, commandType: CommandType.StoredProcedure);
+                    return conn.QueryFirstOrDefault<T>(sp_name, parameters, commandType: CommandType.StoredProcedure);
                 }
             }
             catch (Exception ex)
             {
-                // logger.Warn(ex.ToString());
+                return default(T);
+            }
+        }
+
+        /// <summary>
+        /// select 1 rows and output parameters
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="str_conn"></param>
+        /// <param name="sp_name"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        static public T DB_Query_Single<T>(string str_conn, string sp_name, ref DynamicParameters parameters)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(str_conn))
+                {
+                    return conn.QueryFirstOrDefault<T>(sp_name, parameters, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
                 return default(T);
             }
         }
@@ -61,6 +106,12 @@ namespace StartProject.DB.DBClass
 
 
         #region DB_Execute_Output
+        /// <summary>
+        /// exec sp and output parameters
+        /// </summary>
+        /// <param name="str_conn"></param>
+        /// <param name="sp_name"></param>
+        /// <param name="parameters"></param>
         static public void DB_Execute_Output(string str_conn, string sp_name, ref DynamicParameters parameters)
         {
 
@@ -79,7 +130,6 @@ namespace StartProject.DB.DBClass
             }
             catch (Exception ex)
             {
-                // logger.Warn(ex.ToString());
                 //return null;
             }
         }
