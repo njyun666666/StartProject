@@ -25,15 +25,15 @@ namespace StartProject.Controllers
             this._start2Service = start2Service;
         }
 
-        public ActionResult<List<Table_1Model>> Table_1Get(int? id)
+        public List<Table_1Model> Table_1Get(int? id)
         {
             return _start2Service.Table_1_Get(id);
         }
-        public ActionResult<BaseViewModel> Select_Output()
+        public BaseViewModel Select_Output()
         {
             return _start2Service.Table_1_ref();
         }
-        public ActionResult<BaseViewModel> Output()
+        public BaseViewModel Output()
         {
             return _start2Service.Table_1_Para_Output();
         }

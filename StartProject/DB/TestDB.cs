@@ -30,7 +30,7 @@ namespace StartProject.DB
             // DB_Query
             parameters = new DynamicParameters();
             parameters.Add("@id", id);
-            parameters.Add("@code", dbType: DbType.Int32, size: 100, direction: ParameterDirection.Output);
+            parameters.Add("@code", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parameters.Add("@message", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
 
             return SystemDB.DB_Query<Table_1Model>(str_conn, "SP_Table_Get",ref parameters);
@@ -50,7 +50,7 @@ namespace StartProject.DB
             // DB_Query
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@id", id);
-            parameters.Add("@code", dbType: DbType.Int32, size: 100, direction: ParameterDirection.Output);
+            parameters.Add("@code", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parameters.Add("@message", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
 
             SystemDB.DB_Execute_Output(str_conn, "SP_Table_Get", ref parameters);
