@@ -11,10 +11,16 @@ namespace TestProject.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        protected string today;
+
+        public TestController()
+        {
+            today = "TestController";
+        }
 
         public string index()
         {
-            return "test";
+            return today;
         }
 
     }

@@ -11,6 +11,14 @@ namespace StartProject.DB.DBClass
     public class SystemDB
     {
 
+        //DynamicParameters parameters = new DynamicParameters();
+        //parameters.Add("@id", id);
+        //parameters.AddTable("@paraTable", "table", list);
+        //parameters.Add("@code", dbType: DbType.Int32, size: 100, direction: ParameterDirection.Output);
+        //SystemDB.DB_Execute_Output(str_conn, "sp_name", ref parameters);
+        //int code = parameters.Get<int>("@code");
+
+
         #region DB_Query 資料庫連線
         /// <summary>
         /// Select
@@ -58,14 +66,14 @@ namespace StartProject.DB.DBClass
         #endregion
 
 
-        #region DB_Query_Single 資料庫連線
+        #region DB_QueryFirstOrDefault 資料庫連線
         /// <summary>
         /// select 1 rows
         /// </summary>
         /// <param name="str_conn">連線字串</param>
         /// <param name="sp_name">SP 名稱</param>
         /// <param name="parameters">輸入的值與類型</param>
-        static public T DB_Query_Single<T>(string str_conn, string sp_name, DynamicParameters parameters)
+        static public T DB_QueryFirstOrDefault<T>(string str_conn, string sp_name, DynamicParameters parameters)
         {
             try
             {
@@ -88,7 +96,7 @@ namespace StartProject.DB.DBClass
         /// <param name="sp_name"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        static public T DB_Query_Single<T>(string str_conn, string sp_name, ref DynamicParameters parameters)
+        static public T DB_QueryFirstOrDefault<T>(string str_conn, string sp_name, ref DynamicParameters parameters)
         {
             try
             {
@@ -114,13 +122,6 @@ namespace StartProject.DB.DBClass
         /// <param name="parameters"></param>
         static public void DB_Execute_Output(string str_conn, string sp_name, ref DynamicParameters parameters)
         {
-
-            //DynamicParameters parameters = new DynamicParameters();
-            //parameters.Add("@id", id);
-            //parameters.Add("@code", dbType: DbType.Int32, size: 100, direction: ParameterDirection.Output);
-            //SystemDB.DB_Execute_Output(str_conn, "sp_name", ref parameters);
-            //int code = parameters.Get<int>("@code");
-
             try
             {
                 using (SqlConnection conn = new SqlConnection(str_conn))

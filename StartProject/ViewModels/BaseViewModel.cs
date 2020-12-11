@@ -12,6 +12,6 @@ namespace StartProject.ViewModels
     }
     public class BaseViewModel<T> : BaseViewModel
     {
-        public List<T> data { get; set; }
+        public T data { get; set; }
     }
 }

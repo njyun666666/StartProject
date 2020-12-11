@@ -18,17 +18,16 @@ namespace StartProject.DB
         }
 
 
-        public List<Table_1Model> Table_1_Get(int? id)
+        public List<Table_1Model> Table_1_DB_Query(int? id)
         {
             // DB_Query
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@id", id);
             return SystemDB.DB_Query<Table_1Model>(str_conn, "SP_Table_Get", parameters);
         }
-        public List<Table_1Model> Table_1_ref(int? id, ref DynamicParameters parameters)
+        public List<Table_1Model> Table_1_DB_Query_Output(int? id, ref DynamicParameters parameters)
         {
             // DB_Query
-            parameters = new DynamicParameters();
             parameters.Add("@id", id);
             parameters.Add("@code", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parameters.Add("@message", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
@@ -36,18 +35,18 @@ namespace StartProject.DB
             return SystemDB.DB_Query<Table_1Model>(str_conn, "SP_Table_Get",ref parameters);
         }
 
-        public Table_1Model Table_1_Single(int? id)
+        public Table_1Model Table_1_QueryFirstOrDefault(int id)
         {
-            // DB_Query
+            // DB_QueryFirstOrDefault
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@id", id);
-            return SystemDB.DB_Query_Single<Table_1Model>(str_conn, "SP_Table_Get", parameters);
+            return SystemDB.DB_QueryFirstOrDefault<Table_1Model>(str_conn, "SP_Table_Get", parameters);
         }
 
 
-        public DynamicParameters Table_1_Para_Output(int? id)
+        public DynamicParameters Table_1_Execute_Output(int? id)
         {
-            // DB_Query
+            // DB_Execute_Output
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@id", id);
             parameters.Add("@code", dbType: DbType.Int32, direction: ParameterDirection.Output);
