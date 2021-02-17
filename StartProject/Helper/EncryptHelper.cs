@@ -79,6 +79,20 @@ namespace StartProject.Helper
             return builder.ToString();
         }
 
+
+        //產生 HMACSHA256 雜湊
+        public static string ComputeHMACSHA256(string data, string key)
+        {
+            var keyBytes = Encoding.UTF8.GetBytes(key);
+            using (var hmacSHA = new HMACSHA256(keyBytes))
+            {
+                var dataBytes = Encoding.UTF8.GetBytes(data);
+                var hash = hmacSHA.ComputeHash(dataBytes, 0, dataBytes.Length);
+                return BitConverter.ToString(hash).Replace("-", "").ToUpper();
+            }
+        }
+
+
         public static string MD5_String(string input)
         {
             // Create a new instance of the MD5CryptoServiceProvider object.
@@ -99,6 +113,18 @@ namespace StartProject.Helper
             }
             // Return the hexadecimal string.
             return sBuilder.ToString();
+        }
+
+        public static string Base64Decode(string txt)
+        {
+            byte[] decodedBytes = Convert.FromBase64String(Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes(txt)));
+            return System.Text.Encoding.UTF8.GetString(decodedBytes);
+        }
+
+        public static string Base64Encode(string txt)
+        {
+            byte[] encodedBytes = System.Text.Encoding.Unicode.GetBytes(txt);
+            return Convert.ToBase64String(encodedBytes);
         }
 
 
