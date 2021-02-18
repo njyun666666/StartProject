@@ -66,6 +66,12 @@ namespace StartProject.Controllers
             return a;
         }
 
+        public string HMACSHA256(string id, string key)
+        {
+            string a = EncryptHelper.ComputeHMACSHA256(id, key);
+
+            return a;
+        }
 
     }
 }
