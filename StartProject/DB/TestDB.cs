@@ -39,7 +39,7 @@ namespace StartProject.DB
             // DB_Query
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@id", id);
-            return SystemDB.DB_Query<Table_1Model>(str_conn, "SP_Table_Get", parameters);
+            return SystemDB.DB_Query<Table_1Model>(str_conn, "SP_Table_Get", parameters, type: CommandType.StoredProcedure);
         }
         public List<Table_1Model> Table_1_DB_Query_Output(int? id, ref DynamicParameters parameters)
         {
@@ -48,7 +48,7 @@ namespace StartProject.DB
             parameters.Add("@code", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parameters.Add("@message", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
 
-            return SystemDB.DB_Query<Table_1Model>(str_conn, "SP_Table_Get",ref parameters);
+            return SystemDB.DB_Query<Table_1Model>(str_conn, "SP_Table_Get", ref parameters, type: CommandType.StoredProcedure);
         }
 
         public Table_1Model Table_1_QueryFirstOrDefault(int id)
@@ -56,7 +56,7 @@ namespace StartProject.DB
             // DB_QueryFirstOrDefault
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@id", id);
-            return SystemDB.DB_QueryFirstOrDefault<Table_1Model>(str_conn, "SP_Table_Get", parameters);
+            return SystemDB.DB_QueryFirstOrDefault<Table_1Model>(str_conn, "SP_Table_Get", parameters, type: CommandType.StoredProcedure);
         }
 
 
@@ -68,7 +68,7 @@ namespace StartProject.DB
             parameters.Add("@code", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parameters.Add("@message", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
 
-            SystemDB.DB_Execute_Output(str_conn, "SP_Table_Get", ref parameters);
+            SystemDB.DB_Execute_Output(str_conn, "SP_Table_Get", ref parameters, type: CommandType.StoredProcedure);
 
             //int code = parameters.Get<int>("@code");
             //string message = parameters.Get<string>("@message");

@@ -26,13 +26,13 @@ namespace StartProject.DB.DBClass
         /// <param name="str_conn">連線字串</param>
         /// <param name="sp_name">SP 名稱</param>
         /// <param name="parameters">輸入的值與類型</param>
-        static public List<T> DB_Query<T>(string str_conn, string sp_name, DynamicParameters parameters)
+        static public List<T> DB_Query<T>(string str_conn, string sqlStatement, DynamicParameters parameters = null, IDbTransaction trans = null, CommandType type = CommandType.Text)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(str_conn))
                 {
-                    return conn.Query<T>(sp_name, parameters, commandType: CommandType.StoredProcedure).ToList();
+                    return conn.Query<T>(sqlStatement, parameters, trans, commandType: type).ToList();
                 }
             }
             catch (Exception ex)
@@ -49,13 +49,13 @@ namespace StartProject.DB.DBClass
         /// <param name="sp_name"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        static public List<T> DB_Query<T>(string str_conn, string sp_name, ref DynamicParameters parameters)
+        static public List<T> DB_Query<T>(string str_conn, string sqlStatement, ref DynamicParameters parameters , IDbTransaction trans = null, CommandType type = CommandType.Text)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(str_conn))
                 {
-                    return conn.Query<T>(sp_name, parameters, commandType: CommandType.StoredProcedure).ToList();
+                    return conn.Query<T>(sqlStatement, parameters, trans, commandType: type).ToList();
                 }
             }
             catch (Exception ex)
@@ -73,13 +73,13 @@ namespace StartProject.DB.DBClass
         /// <param name="str_conn">連線字串</param>
         /// <param name="sp_name">SP 名稱</param>
         /// <param name="parameters">輸入的值與類型</param>
-        static public T DB_QueryFirstOrDefault<T>(string str_conn, string sp_name, DynamicParameters parameters)
+        static public T DB_QueryFirstOrDefault<T>(string str_conn, string sqlStatement, DynamicParameters parameters = null, IDbTransaction trans = null, CommandType type = CommandType.Text)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(str_conn))
                 {
-                    return conn.QueryFirstOrDefault<T>(sp_name, parameters, commandType: CommandType.StoredProcedure);
+                    return conn.QueryFirstOrDefault<T>(sqlStatement, parameters, trans, commandType: type);
                 }
             }
             catch (Exception ex)
@@ -96,13 +96,13 @@ namespace StartProject.DB.DBClass
         /// <param name="sp_name"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        static public T DB_QueryFirstOrDefault<T>(string str_conn, string sp_name, ref DynamicParameters parameters)
+        static public T DB_QueryFirstOrDefault<T>(string str_conn, string sqlStatement, ref DynamicParameters parameters, IDbTransaction trans = null, CommandType type = CommandType.Text)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(str_conn))
                 {
-                    return conn.QueryFirstOrDefault<T>(sp_name, parameters, commandType: CommandType.StoredProcedure);
+                    return conn.QueryFirstOrDefault<T>(sqlStatement, parameters, trans, commandType: type);
                 }
             }
             catch (Exception ex)
@@ -113,6 +113,49 @@ namespace StartProject.DB.DBClass
         #endregion
 
 
+
+        static public int DB_Execute(string str_conn, string sqlStatement, DynamicParameters parameters = null, IDbTransaction trans = null, bool DoTransaction = true)
+        {
+            int result = 0;
+            using (SqlConnection conn = new SqlConnection(str_conn))
+            {
+                if (DoTransaction)
+                {
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            result = conn.Execute(sqlStatement, parameters, transaction);
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            throw ex;
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        result = conn.Execute(sqlStatement, parameters, trans);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+
+                }
+
+
+            }
+
+            return result;
+        }
+
+
+
         #region DB_Execute_Output
         /// <summary>
         /// exec sp and output parameters
@@ -120,13 +163,13 @@ namespace StartProject.DB.DBClass
         /// <param name="str_conn"></param>
         /// <param name="sp_name"></param>
         /// <param name="parameters"></param>
-        static public void DB_Execute_Output(string str_conn, string sp_name, ref DynamicParameters parameters)
+        static public void DB_Execute_Output(string str_conn, string sp_name, ref DynamicParameters parameters, IDbTransaction trans = null, CommandType type = CommandType.Text)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(str_conn))
                 {
-                    conn.Execute(sp_name, parameters, commandType: CommandType.StoredProcedure);
+                    conn.Execute(sp_name, parameters, trans, commandType: type);
                 }
             }
             catch (Exception ex)
