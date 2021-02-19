@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using StartProject.Common;
 using StartProject.Helper;
 using StartProject.Models;
 using StartProject.Services.IServices;
@@ -19,11 +20,13 @@ namespace StartProject.Controllers
     {
         private readonly IMemoryCache _memoryCache;
         private readonly IAccountService _accountService;
+        private readonly IMyService _myService;
 
-        public AccountController(IMemoryCache memoryCache, IAccountService accountService) : base(memoryCache)
+        public AccountController(IMemoryCache memoryCache, IAccountService accountService, IMyService myService) : base(memoryCache, myService)
         {
-            this._memoryCache = memoryCache;
-            this._accountService = accountService;
+            _memoryCache = memoryCache;
+            _accountService = accountService;
+            _myService = myService;
         }
 
         public ActionResult<List<WeatherForecast>> Index()
@@ -60,8 +63,8 @@ namespace StartProject.Controllers
 
         public string aesen(string id)
         {
-            string a = EncryptHelper.TokenAES_encrypt(id);
-            a += "\n" + EncryptHelper.TokenAES_decrypt(a);
+            string a = EncryptHelper.AES_encrypt(id, _myService.StartProjectKey());
+            a += "\n" + EncryptHelper.AES_decrypt(a, _myService.StartProjectKey());
 
             return a;
         }

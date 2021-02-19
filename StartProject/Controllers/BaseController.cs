@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using StartProject.Common;
 using StartProject.Helper;
 using StartProject.Models;
 using StartProject.Services;
@@ -16,11 +17,14 @@ namespace StartProject.Controllers
     public class BaseController : ControllerBase
     {
         private readonly IMemoryCache _memoryCache;
-        AccountModel baseAccount;
+        public readonly IMyService _myService;
 
-        protected BaseController(IMemoryCache memoryCache)
+        public AccountModel baseAccount;
+
+        protected BaseController(IMemoryCache memoryCache, IMyService myService)
         {
             _memoryCache = memoryCache;
+            _myService = myService;
             baseAccount = null;
         }
 
@@ -38,7 +42,7 @@ namespace StartProject.Controllers
                 string encodedAuth = authHeader.Substring("Bearer ".Length).Trim();
 
                 //decode
-                string decodeAuth = EncryptHelper.TokenAES_decrypt(encodedAuth);
+                string decodeAuth = EncryptHelper.AES_decrypt(encodedAuth, _myService.StartProjectKey());
 
                 if(!string.IsNullOrWhiteSpace(decodeAuth))
                 {

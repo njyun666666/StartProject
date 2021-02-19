@@ -14,12 +14,12 @@ namespace StartProject.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class DBDemoController : BaseController
+    public class DBDemoController : ControllerBase
     {
         private readonly IMemoryCache _memoryCache;
         private readonly IDBDemoService _dbDemoService;
 
-        public DBDemoController(IMemoryCache memoryCache, IDBDemoService dbDemoService) : base(memoryCache)
+        public DBDemoController(IMemoryCache memoryCache, IDBDemoService dbDemoService) 
         {
             this._memoryCache = memoryCache;
             this._dbDemoService = dbDemoService;

@@ -10,9 +10,7 @@ namespace StartProject.Helper
     public class EncryptHelper
     {
 
-        private static readonly string TokenKey = "AMDYES!!!MmMwz4yfp5@GKyxwRUrzHy";
-
-        public static string TokenAES_encrypt(string ciphertext)
+        public static string AES_encrypt(string ciphertext, string tokenKey)
         {
             string encrypt = "";
             try
@@ -20,8 +18,8 @@ namespace StartProject.Helper
                 AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
                 MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
                 SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider();
-                byte[] key = sha256.ComputeHash(Encoding.UTF8.GetBytes(TokenKey));
-                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(TokenKey));
+                byte[] key = sha256.ComputeHash(Encoding.UTF8.GetBytes(tokenKey));
+                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(tokenKey));
                 aes.Key = key;
                 aes.IV = iv;
 
@@ -38,7 +36,7 @@ namespace StartProject.Helper
 
         }
 
-        public static string TokenAES_decrypt(string ciphertext)
+        public static string AES_decrypt(string ciphertext, string tokenKey)
         {
             string decrypt = "";
             try
@@ -46,8 +44,8 @@ namespace StartProject.Helper
                 AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
                 MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
                 SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider();
-                byte[] key = sha256.ComputeHash(Encoding.UTF8.GetBytes(TokenKey));
-                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(TokenKey));
+                byte[] key = sha256.ComputeHash(Encoding.UTF8.GetBytes(tokenKey));
+                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(tokenKey));
                 aes.Key = key;
                 aes.IV = iv;
 
