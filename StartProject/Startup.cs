@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StartProject.DB;
+using StartProject.DB.DBClass;
 using StartProject.Services;
 using StartProject.Services.IServices;
 
@@ -42,9 +44,14 @@ namespace StartProject
             });
 
 
+
             services.AddMemoryCache();
 
             services.AddControllers();
+
+            
+            services.AddSingleton<IDBConnection, DBConnection>();
+            services.AddSingleton<ITestDB, TestDB>();
 
             services.AddSingleton<IAccountService, AccountService>();
             services.AddSingleton<IDBDemoService, DBDemoService>();

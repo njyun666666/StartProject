@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using StartProject.DB.DBClass;
 using StartProject.Models.Test;
 using System;
@@ -9,12 +10,27 @@ using System.Threading.Tasks;
 
 namespace StartProject.DB
 {
-    public class TestDB : DBConnection
+    public interface ITestDB
     {
-        public TestDB()
+        public List<Table_1Model> Table_1_DB_Query(int? id);
+        public List<Table_1Model> Table_1_DB_Query_Output(int? id, ref DynamicParameters parameters);
+        public Table_1Model Table_1_QueryFirstOrDefault(int id);
+        public DynamicParameters Table_1_Execute_Output(int? id);
+
+    }
+
+    public class TestDB : ITestDB
+    {
+        
+        public readonly string DbName = "Test";
+        public string str_conn;
+
+        public IDBConnection _dBConnection;
+
+        public TestDB(IDBConnection dBConnection)
         {
-            DbName = "Test";
-            Connection(DbName);
+            _dBConnection = dBConnection;
+            str_conn = _dBConnection.Connection(DbName);
         }
 
 
