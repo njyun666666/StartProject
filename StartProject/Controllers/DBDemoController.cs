@@ -25,22 +25,22 @@ namespace StartProject.Controllers
             this._dbDemoService = dbDemoService;
         }
 
-        public List<Table_1Model> Query(int? id)
+        public ActionResult Query(int? id)
         {
-            return _dbDemoService.Table_1_DB_Query(id);
+            return Ok(new OKResponse() { Data = _dbDemoService.Table_1_DB_Query(id) });
         }
-        public BaseViewModel<List<Table_1Model>> Query_Output()
+        public ActionResult Query_Output()
         {
-            return _dbDemoService.Table_1_DB_Query_Output();
+            return Ok(new OKResponse() { Data = _dbDemoService.Table_1_DB_Query_Output() });
         }
-        public Table_1Model Query_Output(int id)
+        public ActionResult Query_Output_id(int id)
         {
-            return _dbDemoService.Table_1_DB_QueryFirstOrDefault(id);
+            return Ok(new OKResponse() { Data = _dbDemoService.Table_1_DB_QueryFirstOrDefault(id) });
         }
 
-        public BaseViewModel Execute_Output()
+        public ActionResult Execute_Output()
         {
-            return _dbDemoService.Table_1_Execute_Output();
+            return Ok(new OKResponse() { Data = _dbDemoService.Table_1_Execute_Output() });
         }
 
 

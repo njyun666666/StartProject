@@ -23,34 +23,22 @@ namespace StartProject.Services
             return _testDB.Table_1_DB_Query(id);
         }
 
-        public BaseViewModel<List<Table_1Model>> Table_1_DB_Query_Output()
+        public List<Table_1Model> Table_1_DB_Query_Output()
         {
-            BaseViewModel<List<Table_1Model>> baseViewModel = new BaseViewModel<List<Table_1Model>>();
-            DynamicParameters parameters = null;
+            DynamicParameters parameters = new DynamicParameters();
             List<Table_1Model> list = _testDB.Table_1_DB_Query_Output(1, ref parameters);
-
-            baseViewModel.code = parameters.Get<int>("@code");
-            baseViewModel.message = parameters.Get<string>("@message");
-            baseViewModel.data = list;
-
-            return baseViewModel;
+            return list;
         }
 
         public Table_1Model Table_1_DB_QueryFirstOrDefault(int id)
         {
-            return _testDB.Table_1_QueryFirstOrDefault(1);
+            return _testDB.Table_1_QueryFirstOrDefault(id);
         }
 
-        public BaseViewModel Table_1_Execute_Output()
+        public string Table_1_Execute_Output()
         {
-            BaseViewModel baseViewModel = new BaseViewModel();
-
             DynamicParameters parameters = _testDB.Table_1_Execute_Output(1);
-
-            baseViewModel.code = parameters.Get<int>("@code");
-            baseViewModel.message = parameters.Get<string>("@message");
-            
-            return baseViewModel;
+            return parameters.Get<string>("@message");
         }
     }
 }

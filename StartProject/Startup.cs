@@ -55,9 +55,12 @@ namespace StartProject
             services.AddSingleton<IDBConnection, DBConnection>();
             services.AddSingleton<ITestDB, TestDB>();
 
+            
             services.AddSingleton<IMyService, MyService>();
 
-
+            
+            services.AddSingleton<ICacheService, CacheService>();
+            services.AddSingleton<ITokenService, TokenService>();
             services.AddSingleton<IAccountService, AccountService>();
             services.AddSingleton<IDBDemoService, DBDemoService>();
         }

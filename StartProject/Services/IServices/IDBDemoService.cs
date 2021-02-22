@@ -10,8 +10,8 @@ namespace StartProject.Services.IServices
     public interface IDBDemoService
     {
         public List<Table_1Model> Table_1_DB_Query(int? id);
-        public BaseViewModel<List<Table_1Model>> Table_1_DB_Query_Output();
-        public BaseViewModel Table_1_Execute_Output();
+        public List<Table_1Model> Table_1_DB_Query_Output();
+        public string Table_1_Execute_Output();
         public Table_1Model Table_1_DB_QueryFirstOrDefault(int id);
 
 
