@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using StartProject.Common;
 using StartProject.Enums;
 using StartProject.Models.Token;
 using StartProject.Services.IServices;
@@ -60,7 +61,10 @@ namespace StartProject.Middlewares
                         return;
                     }
 
-
+                    //Header加UID資訊
+                    AddHeader(httpContext, "UID", tokenModel.UID);
+                    //Header加IP資訊
+                    AddHeader(httpContext, "IP", CommonTools.Userip_Get(httpContext));
 
                 }
                 catch (Exception ex)
