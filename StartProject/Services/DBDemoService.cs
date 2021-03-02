@@ -7,6 +7,7 @@ using StartProject.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -26,10 +27,13 @@ namespace StartProject.Services
             _myService = myService;
         }
 
+        
+
         public List<Table_1Model> Table_1_DB_Query(int? id)
         {
             // from cache
-            string cacheKey = $"{_myService.GetWhoCallMethod()}_{id}";
+            string apiPath = _myService.APIPath();
+            string cacheKey = $"{apiPath}_{MethodBase.GetCurrentMethod().Name}_{id}";
             var registerInfoCacheJson = _cache.Get(cacheKey);
 
             if (registerInfoCacheJson != null)

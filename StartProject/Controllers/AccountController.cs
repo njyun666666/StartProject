@@ -11,27 +11,27 @@ using StartProject.Common;
 using StartProject.Helper;
 using StartProject.Models;
 using StartProject.Services.IServices;
+using StartProject.ViewModels;
 
 namespace StartProject.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AccountController : BaseController
+    public class AccountController : ControllerBase
     {
-        private readonly IMemoryCache _memoryCache;
+        private readonly ICacheService _cache;
         private readonly IAccountService _accountService;
         private readonly IMyService _myService;
 
-        public AccountController(IMemoryCache memoryCache, IAccountService accountService, IMyService myService) : base(memoryCache, myService)
+        public AccountController(ICacheService cache, IAccountService accountService, IMyService myService)
         {
-            _memoryCache = memoryCache;
+            _cache = cache;
             _accountService = accountService;
             _myService = myService;
         }
 
         public ActionResult<List<WeatherForecast>> Index()
         {
-            ClientIP_Get();
 
             AccountModel account = new AccountModel()
             {
@@ -49,15 +49,9 @@ namespace StartProject.Controllers
             return result;
         }
 
-        public string ip()
+        public IActionResult ip([FromHeader] string ip)
         {
-
-            string a = "";
-            a+= "X-Forwarded-For:" + HttpContext.Request.Headers["X-Forwarded-For"].ToString().Split(new char[] { ',' }).FirstOrDefault();
-            a += "\nMS_HttpContext:" + HttpContext.Request.Headers["MS_HttpContext"];
-            a += "\nRemoteIpAddress:" + HttpContext.Connection.RemoteIpAddress.ToString();
-            a += "\n" + ClientIP_Get();
-            return a;
+            return Ok(new OKResponse() { Data = ip });
         }
 
 

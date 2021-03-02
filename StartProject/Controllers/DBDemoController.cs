@@ -16,17 +16,18 @@ namespace StartProject.Controllers
     [ApiController]
     public class DBDemoController : ControllerBase
     {
-        private readonly IMemoryCache _memoryCache;
+        private readonly ICacheService _cache;
         private readonly IDBDemoService _dbDemoService;
 
-        public DBDemoController(IMemoryCache memoryCache, IDBDemoService dbDemoService) 
+        public DBDemoController(ICacheService cache, IDBDemoService dbDemoService) 
         {
-            this._memoryCache = memoryCache;
-            this._dbDemoService = dbDemoService;
+            _cache = cache;
+            _dbDemoService = dbDemoService;
         }
 
         public ActionResult Query(int? id)
         {
+            var a = this.ControllerContext.RouteData;
             return Ok(new OKResponse() { Data = _dbDemoService.Table_1_DB_Query(id) });
         }
         public ActionResult Query_Output()

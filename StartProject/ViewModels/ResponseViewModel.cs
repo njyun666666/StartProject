@@ -1,4 +1,5 @@
-﻿using StartProject.Enums;
+﻿using StartProject.Common;
+using StartProject.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,14 @@ namespace StartProject.ViewModels
         public string Message { get; set; }
         
         [JsonPropertyName("timestamp")]
-        public long TimeStamp { get; set; } //= CommonTools.GetTimeStamp();
+        public long TimeStamp { get; set; } = CommonTools.GetTimeStamp();
 
         [JsonPropertyName("data")]
         public object Data { get; set; }
         public ResponseViewModel()
         {
-            this.Code = -10001;
-            this.Message = "Unknown error";
+            this.Code = (int)ResponseCodeEnum.unknown_error;
+            //this.Message = "Unknown error";
         }
         public ResponseViewModel(int code, string msg = null)
         {
@@ -46,18 +47,17 @@ namespace StartProject.ViewModels
     }
     public class DisableResponse : ResponseViewModel
     {
-        public DisableResponse() : base(2)
+        public DisableResponse() : base(ResponseCodeEnum.account_disable)
         {
-            this.Message = "Account Disable";
         }
     }
 
     public class MissParamResponse : ResponseViewModel
     {
-        public MissParamResponse() : base(-1)
+        public MissParamResponse() : base(ResponseCodeEnum.param_lack)
         {
         }
-        public MissParamResponse(string paramName) : base(-1)
+        public MissParamResponse(string paramName) : base(ResponseCodeEnum.param_error)
         {
             this.Message = "缺少參數:" + paramName;
         }
@@ -65,55 +65,49 @@ namespace StartProject.ViewModels
 
     public class NoTokenResponse : ResponseViewModel
     {
-        public NoTokenResponse() : base(-4)
+        public NoTokenResponse() : base(ResponseCodeEnum.not_contain_token)
         {
-            this.Message = "Information does not contain token";
         }
     }
 
     public class TokenNotExistResponse : ResponseViewModel
     {
-        public TokenNotExistResponse() : base(-5)
+        public TokenNotExistResponse() : base(ResponseCodeEnum.token_not_exist)
         {
-            this.Message = "TokenNotExist";
         }
     }
 
     public class TokenExpiredResponse : ResponseViewModel
     {
-        public TokenExpiredResponse() : base(-10)
+        public TokenExpiredResponse() : base(ResponseCodeEnum.token_expired)
         {
-            this.Message = "TokenExpired";
         }
     }
 
     public class DecryptErrorResponse : ResponseViewModel
     {
-        public DecryptErrorResponse() : base(-11)
+        public DecryptErrorResponse() : base(ResponseCodeEnum.token_decrypt_error)
         {
-            this.Message = "TokenDecryptError";
         }
     }
 
     public class NoRefreshTokenResponse : ResponseViewModel
     {
-        public NoRefreshTokenResponse() : base(-12)
+        public NoRefreshTokenResponse() : base(ResponseCodeEnum.refreah_token_not_exist)
         {
-            this.Message = "RefreshToken does not exist";
         }
     }
 
     public class SystemErrorResponse : ResponseViewModel
     {
-        public SystemErrorResponse() : base(-999)
+        public SystemErrorResponse() : base(ResponseCodeEnum.system_error)
         {
-            this.Message = "SystemError";
         }
     }
 
     public class SystemContentErrorResponse : ResponseViewModel
     {
-        public SystemContentErrorResponse(string msg) : base(-998)
+        public SystemContentErrorResponse(string msg) : base(ResponseCodeEnum.system_content_error)
         {
             this.Message = msg;
         }
@@ -121,7 +115,7 @@ namespace StartProject.ViewModels
 
     public class NoDataResponse : ResponseViewModel
     {
-        public NoDataResponse() : base(999)
+        public NoDataResponse() : base(ResponseCodeEnum.no_data_error)
         {
             this.Message = "查無資料";
         }

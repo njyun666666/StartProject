@@ -23,7 +23,11 @@ namespace StartProject.Services
 
         public string CreateToken(string uid, int expireddate)
         {
-            return "";
+            TokenModel tokenModel = new TokenModel() { UID = uid, ExpiresDate = expireddate };
+            string iv = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 16);
+            string jsonstr = JsonSerializer.Serialize(tokenModel);
+            string encodestr = EncryptHelper.UrlEncode(EncryptHelper.AES_encrypt(jsonstr, _myService.StartProjectKey(), iv));
+            return iv + "." + encodestr;
         }
 
         /// <summary>
@@ -35,7 +39,12 @@ namespace StartProject.Services
         {
             try
             {
-                string tokenDecrypt = EncryptHelper.AES_decrypt(token, _myService.StartProjectKey());
+                var split = token.Split('.');
+                var iv = split[0];
+                var encrypt = split[1];
+                encrypt = EncryptHelper.UrlDecode(encrypt);
+
+                string tokenDecrypt = EncryptHelper.AES_decrypt(encrypt, _myService.StartProjectKey(), iv);
 
                 if (!string.IsNullOrWhiteSpace(tokenDecrypt))
                 {
@@ -59,7 +68,7 @@ namespace StartProject.Services
                 return ResponseCodeEnum.token_not_exist;
             }
 
-            if (tokenModel.ExpiresDate < DateTime.Now)
+            if (tokenModel.ExpiresDate < CommonTools.GetTimeStamp(DateTime.Now))
             {
                 return ResponseCodeEnum.token_expired;
             }

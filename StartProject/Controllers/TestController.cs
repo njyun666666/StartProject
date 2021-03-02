@@ -10,11 +10,11 @@ namespace StartProject.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class FromTestController : TestController
+    public class TestController 
     {
-        public FromTestController() : base ()
+        public TestController()
         {
-            today = "FromTestController set today";
+            
         }
     }
 }

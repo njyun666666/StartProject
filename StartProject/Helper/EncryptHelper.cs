@@ -4,13 +4,27 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace StartProject.Helper
 {
     public class EncryptHelper
     {
+        public static string UrlEncode(string value)
+        {
+            var tmp = value;
+            return HttpUtility.UrlEncode(tmp, System.Text.Encoding.GetEncoding("utf-8"));
+            //return WebUtility.UrlEncode(tmp);
+        }
 
-        public static string AES_encrypt(string ciphertext, string tokenKey)
+        public static string UrlDecode(string value)
+        {
+            var tmp = value;
+            return HttpUtility.UrlDecode(tmp);
+            //return WebUtility.UrlDecode(tmp);
+        }
+
+        public static string AES_encrypt(string ciphertext, string tokenKey, string tokenIV = null)
         {
             string encrypt = "";
             try
@@ -19,7 +33,7 @@ namespace StartProject.Helper
                 MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
                 SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider();
                 byte[] key = sha256.ComputeHash(Encoding.UTF8.GetBytes(tokenKey));
-                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(tokenKey));
+                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(tokenIV == null ? tokenKey : tokenIV));
                 aes.Key = key;
                 aes.IV = iv;
 
@@ -36,7 +50,7 @@ namespace StartProject.Helper
 
         }
 
-        public static string AES_decrypt(string ciphertext, string tokenKey)
+        public static string AES_decrypt(string ciphertext, string tokenKey, string tokenIV = null)
         {
             string decrypt = "";
             try
@@ -45,7 +59,7 @@ namespace StartProject.Helper
                 MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
                 SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider();
                 byte[] key = sha256.ComputeHash(Encoding.UTF8.GetBytes(tokenKey));
-                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(tokenKey));
+                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(tokenIV == null ? tokenKey : tokenIV));
                 aes.Key = key;
                 aes.IV = iv;
 

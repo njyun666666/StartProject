@@ -13,6 +13,6 @@ namespace StartProject.Models.Token
         /// <summary>
         /// cookie Expires Date
         /// </summary>
-        public DateTime ExpiresDate { get; set; }
+        public int ExpiresDate { get; set; }
     }
 }

@@ -23,14 +23,20 @@ namespace StartProject.Enums
         [Description("TokenExpired")]
         token_expired = -10,
 
+        [Description("TokenDecryptError")]
+        token_decrypt_error = -11,
+
         [Description("RefreshToken does not exist")]
         refreah_token_not_exist = -12,
+
+        [Description("SystemContentError")]
+        system_content_error = -998,
 
         [Description("SystemError")]
         system_error = -999,
 
-        [Description("SystemContentError")]
-        system_content_error = -998,
+        [Description("Exception")]
+        exception = -9999,
 
         [Description("Unknown error")]
         unknown_error = -10001,
@@ -44,5 +50,9 @@ namespace StartProject.Enums
 
         [Description("Success")]
         success = 1,
+
+        [Description("Account Disable")]
+        account_disable = 2,
+
     }
 }
