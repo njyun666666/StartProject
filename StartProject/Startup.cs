@@ -43,9 +43,10 @@ namespace StartProject
                 builder =>
                 {
                     builder//.WithOrigins(Configuration.GetValue<string>("App:CorsOrigins").Replace(" ", "").Split(",", StringSplitOptions.RemoveEmptyEntries))
+                    .AllowAnyOrigin()
                     .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
+                    .AllowAnyMethod();
+                    //.AllowCredentials();
                 });
             });
 
@@ -108,13 +109,13 @@ namespace StartProject
             //});
 
 
-            app.UseWhen(context => !context.Request.Path.StartsWithSegments("/Login")
-                && !context.Request.Path.StartsWithSegments("/Test")
-                && !context.Request.Path.StartsWithSegments("/DBConn"),
-                appBuilder =>
-                {
-                    appBuilder.UseMiddleware<TokenCheckMiddleware>();
-                });
+            //app.UseWhen(context => !context.Request.Path.StartsWithSegments("/Login")
+            //    && !context.Request.Path.StartsWithSegments("/Test")
+            //    && !context.Request.Path.StartsWithSegments("/DBConn"),
+            //    appBuilder =>
+            //    {
+            //        appBuilder.UseMiddleware<TokenCheckMiddleware>();
+            //    });
 
             //app.Run(async context =>
             //{
@@ -153,15 +154,15 @@ namespace StartProject
 
 
 
-            app.UseWhen(context => !context.Request.Path.StartsWithSegments("/Login")
-                && !context.Request.Path.StartsWithSegments("/Test")
-                && !context.Request.Path.StartsWithSegments("/DBConn"),
-                appBuilder =>
-                {
-                    appBuilder.UseMiddleware<TokenCheckMiddleware>();
-                    var logService=appBuilder.ApplicationServices.GetService<ILogService>();
-                    logService.Add(1,"");
-                });
+            //app.UseWhen(context => !context.Request.Path.StartsWithSegments("/Login")
+            //    && !context.Request.Path.StartsWithSegments("/Test")
+            //    && !context.Request.Path.StartsWithSegments("/DBConn"),
+            //    appBuilder =>
+            //    {
+            //        appBuilder.UseMiddleware<TokenCheckMiddleware>();
+            //        //var logService=appBuilder.ApplicationServices.GetService<ILogService>();
+            //        //logService.Add(1,"");
+            //    });
 
 
 

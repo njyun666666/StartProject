@@ -21,12 +21,12 @@ namespace StartProject.Services
             _myService = myService;
             _accessor = accessor;
 
-            if (accessor != null)
-            {
-                controllerName = _accessor.HttpContext.Request.RouteValues["Controller"].ToString();
-                actionName = _accessor.HttpContext.Request.RouteValues["Action"].ToString();
-                ip = CommonTools.Userip_Get(_accessor.HttpContext);
-            }
+            //if (accessor != null)
+            //{
+            //    controllerName = _accessor.HttpContext.Request.RouteValues["Controller"].ToString();
+            //    actionName = _accessor.HttpContext.Request.RouteValues["Action"].ToString();
+            //    ip = CommonTools.Userip_Get(_accessor.HttpContext);
+            //}
         }
 
 
