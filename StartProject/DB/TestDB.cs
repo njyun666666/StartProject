@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using StartProject.DB.DBClass;
 using StartProject.Models.Test;
+using StartProject.Models.Todo;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,6 +17,7 @@ namespace StartProject.DB
         public List<Table_1Model> Table_1_DB_Query_Output(int? id, ref DynamicParameters parameters);
         public Table_1Model Table_1_QueryFirstOrDefault(int id);
         public DynamicParameters Table_1_Execute_Output(int? id);
+        public List<TodoTaskModel> GetTodoTask();
 
     }
 
@@ -76,6 +78,16 @@ namespace StartProject.DB
             return parameters;
         }
 
+
+
+        #region todo
+        public List<TodoTaskModel> GetTodoTask()
+        {
+            string sql = "SELECT [Id], [Subject], [State], [Level], [Tags] as tags_string  FROM [Test].[dbo].[TodoTask] with (nolock)";
+            return SystemDB.DB_Query<TodoTaskModel>(str_conn, sql);
+        }
+
+        #endregion
 
     }
 }

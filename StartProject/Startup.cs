@@ -77,6 +77,8 @@ namespace StartProject
             services.AddSingleton<ITokenService, TokenService>();
             services.AddSingleton<IAccountService, AccountService>();
             services.AddSingleton<IDBDemoService, DBDemoService>();
+            services.AddSingleton<ITodoService, TodoService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
