@@ -19,9 +19,9 @@ namespace StartProject.Controllers
             _todoService = todoService;
         }
 
-        public IActionResult Get()
+        public IActionResult Get(string subject)
         {
-            return Ok(new OKResponse() { Data=_todoService.GetTodoTask() });
+            return Ok(new OKResponse() { Data=_todoService.GetTodoTask(subject) });
         }
 
 

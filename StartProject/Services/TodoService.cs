@@ -22,9 +22,9 @@ namespace StartProject.Services
             _myService = myService;
         }
 
-        public List<TodoTaskModel> GetTodoTask()
+        public List<TodoTaskModel> GetTodoTask(string subject)
         {
-            return _testDB.GetTodoTask();
+            return _testDB.GetTodoTask(subject);
         }
 
 

@@ -8,6 +8,6 @@ namespace StartProject.Services.IServices
 {
     public interface ITodoService
     {
-        public List<TodoTaskModel> GetTodoTask();
+        public List<TodoTaskModel> GetTodoTask(string subject);
     }
 }

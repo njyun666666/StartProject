@@ -17,7 +17,7 @@ namespace StartProject.DB
         public List<Table_1Model> Table_1_DB_Query_Output(int? id, ref DynamicParameters parameters);
         public Table_1Model Table_1_QueryFirstOrDefault(int id);
         public DynamicParameters Table_1_Execute_Output(int? id);
-        public List<TodoTaskModel> GetTodoTask();
+        public List<TodoTaskModel> GetTodoTask(string subject);
 
     }
 
@@ -81,10 +81,20 @@ namespace StartProject.DB
 
 
         #region todo
-        public List<TodoTaskModel> GetTodoTask()
+        public List<TodoTaskModel> GetTodoTask(string subject)
         {
-            string sql = "SELECT [Id], [Subject], [State], [Level], [Tags] as tags_string, ExpectDate, FinishedDate  FROM [Test].[dbo].[TodoTask] with (nolock)";
-            return SystemDB.DB_Query<TodoTaskModel>(str_conn, sql);
+            string sql = "SELECT [Id], [Subject], [State], [Level], [Tags] as tags_string, ExpectDate, FinishedDate  FROM [Test].[dbo].[TodoTask] with (nolock) where 1=1 ";
+
+            DynamicParameters parameters = new DynamicParameters();
+
+            if (!string.IsNullOrWhiteSpace(subject))
+            {
+                sql += " and Subject like @in_subject ";
+                parameters.Add("@in_subject", $"%{subject}%");
+            }
+
+
+            return SystemDB.DB_Query<TodoTaskModel>(str_conn, sql, parameters);
         }
 
         #endregion
