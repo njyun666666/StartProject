@@ -83,7 +83,7 @@ namespace StartProject.DB
         #region todo
         public List<TodoTaskModel> GetTodoTask()
         {
-            string sql = "SELECT [Id], [Subject], [State], [Level], [Tags] as tags_string  FROM [Test].[dbo].[TodoTask] with (nolock)";
+            string sql = "SELECT [Id], [Subject], [State], [Level], [Tags] as tags_string, ExpectDate, FinishedDate  FROM [Test].[dbo].[TodoTask] with (nolock)";
             return SystemDB.DB_Query<TodoTaskModel>(str_conn, sql);
         }
 

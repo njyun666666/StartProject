@@ -28,6 +28,9 @@ namespace StartProject.Models.Todo
             }
         }
 
+        public DateTime ExpectDate { get; set; }
+        public DateTime FinishedDate { get; set; }
+
     }
 
 
