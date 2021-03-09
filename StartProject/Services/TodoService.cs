@@ -27,6 +27,10 @@ namespace StartProject.Services
             return _testDB.GetTodoTask(subject);
         }
 
+        public int Add(TodoTaskAddModel model)
+        {
+            return _testDB.Add(model);
+        }
 
     }
 }

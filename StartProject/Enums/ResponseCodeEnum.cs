@@ -54,5 +54,9 @@ namespace StartProject.Enums
         [Description("Account Disable")]
         account_disable = 2,
 
+        [Description("Todolist add task error")]
+        todolist_add_task_error = 100,
+
+
     }
 }

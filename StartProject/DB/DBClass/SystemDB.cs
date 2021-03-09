@@ -119,6 +119,8 @@ namespace StartProject.DB.DBClass
             int result = 0;
             using (SqlConnection conn = new SqlConnection(str_conn))
             {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+
                 if (DoTransaction)
                 {
                     using (var transaction = conn.BeginTransaction())

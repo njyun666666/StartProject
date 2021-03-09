@@ -18,6 +18,7 @@ namespace StartProject.DB
         public Table_1Model Table_1_QueryFirstOrDefault(int id);
         public DynamicParameters Table_1_Execute_Output(int? id);
         public List<TodoTaskModel> GetTodoTask(string subject);
+        public int Add(TodoTaskAddModel model);
 
     }
 
@@ -96,6 +97,21 @@ namespace StartProject.DB
 
             return SystemDB.DB_Query<TodoTaskModel>(str_conn, sql, parameters);
         }
+        public int Add(TodoTaskAddModel model)
+        {
+            string sql = "INSERT INTO [dbo].[TodoTask] ([Subject],[State],[Level],[Tags])"
+                        + " VALUES( @in_subject, @in_state, @in_level, @in_tags); ";
+
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@in_subject", model.subject);
+            parameters.Add("@in_state", model.state);
+            parameters.Add("@in_level", model.level);
+            parameters.Add("@in_tags", string.Join(",", model.tags));
+
+            return SystemDB.DB_Execute(str_conn, sql, parameters);
+        }
+
 
         #endregion
 
