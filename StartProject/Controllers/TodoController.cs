@@ -25,6 +25,10 @@ namespace StartProject.Controllers
         {
             return Ok(new OKResponse() { Data=_todoService.GetTodoTask(subject) });
         }
+        public IActionResult GetById(int id)
+        {
+            return Ok(new OKResponse() { Data = _todoService.GetTodoTaskById(id) });
+        }
 
         [HttpPost]
         public IActionResult Add(TodoTaskAddModel model)
@@ -44,6 +48,16 @@ namespace StartProject.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost]
+        public IActionResult SubjectExists(TodoTaskAddModel model)
+        {
+            return Ok(new OKResponse() { Data = _todoService.SubjectExists(model) });
+        }
+
+
+
+
 
     }
 

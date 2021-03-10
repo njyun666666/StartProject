@@ -26,10 +26,19 @@ namespace StartProject.Services
         {
             return _testDB.GetTodoTask(subject);
         }
+        public TodoTaskModel GetTodoTaskById(int id)
+        {
+            return _testDB.GetTodoTaskById(id);
+        }
 
         public int Add(TodoTaskAddModel model)
         {
             return _testDB.Add(model);
+        }
+
+        public int SubjectExists(TodoTaskAddModel model)
+        {
+            return _testDB.SubjectExists(model.subject);
         }
 
     }

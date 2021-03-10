@@ -9,6 +9,8 @@ namespace StartProject.Services.IServices
     public interface ITodoService
     {
         public List<TodoTaskModel> GetTodoTask(string subject);
+        public TodoTaskModel GetTodoTaskById(int id);
         public int Add(TodoTaskAddModel model);
+        public int SubjectExists(TodoTaskAddModel model);
     }
 }

@@ -18,8 +18,9 @@ namespace StartProject.DB
         public Table_1Model Table_1_QueryFirstOrDefault(int id);
         public DynamicParameters Table_1_Execute_Output(int? id);
         public List<TodoTaskModel> GetTodoTask(string subject);
+        public TodoTaskModel GetTodoTaskById(int id);
         public int Add(TodoTaskAddModel model);
-
+        public int SubjectExists(string subject);
     }
 
     public class TestDB : ITestDB
@@ -97,6 +98,15 @@ namespace StartProject.DB
 
             return SystemDB.DB_Query<TodoTaskModel>(str_conn, sql, parameters);
         }
+        public TodoTaskModel GetTodoTaskById(int id)
+        {
+            string sql = "SELECT [Id], [Subject], [State], [Level], [Tags] as tags_string, ExpectDate, FinishedDate  FROM [Test].[dbo].[TodoTask] with (nolock) where Id=@in_id ";
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@in_id", id);
+
+            return SystemDB.DB_QueryFirstOrDefault<TodoTaskModel>(str_conn, sql, parameters);
+        }
         public int Add(TodoTaskAddModel model)
         {
             string sql = "INSERT INTO [dbo].[TodoTask] ([Subject],[State],[Level],[Tags])"
@@ -111,7 +121,16 @@ namespace StartProject.DB
 
             return SystemDB.DB_Execute(str_conn, sql, parameters);
         }
+        public int SubjectExists(string subject)
+        {
+            string sql = "SELECT TOP 1 1 FROM [Test].[dbo].[TodoTask] with (nolock) where subject=@in_subject ";
 
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@in_subject", subject);
+
+
+            return SystemDB.DB_QueryFirstOrDefault<int>(str_conn, sql, parameters);
+        }
 
         #endregion
 
