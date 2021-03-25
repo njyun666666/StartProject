@@ -8,7 +8,6 @@ using Microsoft.Extensions.Caching.Memory;
 using StartProject.Models.Test;
 using StartProject.Services.IServices;
 using StartProject.ViewModels;
-using TestProject.Controllers;
 
 namespace StartProject.Controllers
 {
