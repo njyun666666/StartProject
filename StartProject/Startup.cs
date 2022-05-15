@@ -147,6 +147,10 @@ namespace StartProject
             {
                 app.UseDeveloperExceptionPage();
             }
+			else
+			{
+                app.UseExceptionMiddleware();
+            }
 
             // error redirect
             app.UseStatusCodePagesWithRedirects("/api/Account/ip");
